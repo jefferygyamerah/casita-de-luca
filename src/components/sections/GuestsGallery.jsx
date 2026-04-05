@@ -1,52 +1,75 @@
 import Section from '../ui/Section'
 import useScrollReveal from '../../hooks/useScrollReveal'
-import { getHuespedcitos } from '../../data/contentStore'
 
-const PLACEHOLDERS = [
-  { name: 'Coco', breed: 'Pomeranian', personality: 'El rey de los mimos y los rulos.', bg: 'from-tealLight to-tealMuted' },
-  { name: 'Max', breed: 'Golden Retriever', personality: 'Siempre listo para jugar con todos.', bg: 'from-softPeach to-coralLight' },
-  { name: 'Luna', breed: 'French Bulldog', personality: 'Pequeña pero con carácter enorme.', bg: 'from-coralLight to-coralMuted' },
-  { name: 'Bruno', breed: 'Labrador', personality: 'El más feliz del grupo, siempre.', bg: 'from-tealLight to-tealMuted' },
-  { name: 'Mia', breed: 'Shih Tzu', personality: 'Princesa oficial de La Casita.', bg: 'from-softPeach to-coralLight' },
-  { name: 'Rocky', breed: 'Beagle', personality: 'Nariz detective, corazón de oro.', bg: 'from-tealMuted to-tealLight' },
+// Google Drive direct image URLs (folder: 1YhSEsXPpL4aTittqa1vq3ZG0sINmxJCl)
+const guests = [
+  {
+    name: 'Donna',
+    image: 'https://lh3.googleusercontent.com/d/1wdvdO0uSnD6G_N47NkVYh3_BUDCd8s59',
+    personality: 'Dulce, cariñosa y siempre lista para un abrazo.',
+    bg: 'from-tealLight to-tealMuted',
+  },
+  {
+    name: 'Jck',
+    image: 'https://lh3.googleusercontent.com/d/1Ln3xR0Vw5Umn8vreSxXzstyOwXeK61Gj',
+    personality: 'Energía infinita y el mejor amigo de todos.',
+    bg: 'from-softPeach to-coralLight',
+  },
+  {
+    name: 'Luffy',
+    image: 'https://lh3.googleusercontent.com/d/1WkOACOMTdQqV3fZIBknaLU6CODK480I7',
+    personality: 'Aventurero nato, explorador de corazón.',
+    bg: 'from-coralLight to-coralMuted',
+  },
+  {
+    name: 'Milo',
+    image: 'https://lh3.googleusercontent.com/d/1XUxUduh0qLOLmWHXsIhSVMbCHOdXcGID',
+    personality: 'Tranquilo, noble y muy consentido.',
+    bg: 'from-tealLight to-tealMuted',
+  },
+  {
+    name: 'Oscar Itto',
+    image: 'https://lh3.googleusercontent.com/d/1Bt2qKKFLDJas7I1c4VbpbN5uhLM6vEFD',
+    personality: 'Pequeño de tamaño, enorme de personalidad.',
+    bg: 'from-softPeach to-coralLight',
+  },
+  {
+    name: 'Ozzy',
+    image: 'https://lh3.googleusercontent.com/d/1zIB3aRZ6pY4RkxZOiyiYiW7-YUzDRjji',
+    personality: 'El más juguetón de La Casita, siempre.',
+    bg: 'from-tealMuted to-tealLight',
+  },
+  {
+    name: 'Wdy',
+    image: 'https://lh3.googleusercontent.com/d/1a3MF9dhXfqpy_vSJZI2D2P2ADLGvM-mV',
+    personality: 'Curioso, inteligente y muy buen compañero.',
+    bg: 'from-coralLight to-coralMuted',
+  },
 ]
 
-function PlaceholderCard({ name, breed, personality, bg, delay }) {
+function GuestCard({ name, image, personality, bg, delay }) {
   const ref = useScrollReveal(delay)
   return (
     <div
       ref={ref}
       className="rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-200 ease-out hover:-translate-y-1"
     >
-      <div className={`bg-gradient-to-br ${bg} h-40 flex items-center justify-center`}>
-        <span className="text-6xl" aria-hidden="true">🐾</span>
-      </div>
-      <div className="bg-white px-5 py-4">
-        <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-heading)' }}>{name}</p>
-        <p className="text-xs text-mutedText font-medium mb-1">{breed}</p>
-        <p className="text-sm text-bodyText leading-snug">{personality}</p>
-      </div>
-    </div>
-  )
-}
-
-function PhotoCard({ dog, delay }) {
-  const ref = useScrollReveal(delay)
-  return (
-    <div
-      ref={ref}
-      className="rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-200 ease-out hover:-translate-y-1"
-    >
-      <div className="h-40 overflow-hidden">
+      {/* Photo — gradient shows as fallback if image fails to load */}
+      <div className={`bg-gradient-to-br ${bg} h-40 relative overflow-hidden`}>
         <img
-          src={dog.photoUrl}
-          alt={dog.name}
+          src={image}
+          alt={name}
+          loading="lazy"
           className="w-full h-full object-cover"
+          onError={(e) => { e.currentTarget.style.display = 'none' }}
         />
       </div>
+
       <div className="bg-white px-5 py-4">
-        <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-heading)' }}>{dog.name}</p>
-        {dog.breed && <p className="text-xs text-mutedText font-medium">{dog.breed}</p>}
+        <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-heading)' }}>
+          {name}
+        </p>
+        <p className="text-sm text-bodyText leading-snug mt-1">{personality}</p>
       </div>
     </div>
   )
@@ -54,8 +77,6 @@ function PhotoCard({ dog, delay }) {
 
 export default function GuestsGallery() {
   const headRef = useScrollReveal()
-  const huespedcitos = getHuespedcitos()
-  const guests = huespedcitos.length > 0 ? huespedcitos : null
 
   return (
     <Section bg="bg-white">
@@ -74,19 +95,11 @@ export default function GuestsGallery() {
         </p>
       </div>
 
-      {guests ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
-          {guests.map((dog, i) => (
-            <PhotoCard key={dog.id} dog={dog} delay={i * 60} />
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
-          {PLACEHOLDERS.map((g, i) => (
-            <PlaceholderCard key={i} {...g} delay={i * 60} />
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
+        {guests.map((g, i) => (
+          <GuestCard key={i} {...g} delay={i * 60} />
+        ))}
+      </div>
     </Section>
   )
 }
