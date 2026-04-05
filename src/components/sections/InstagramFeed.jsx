@@ -40,7 +40,7 @@ export default function InstagramFeed() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-sm font-semibold text-tealDark hover:text-teal transition-colors no-underline flex-shrink-0"
         >
-          <Instagram className="w-4 h-4" />
+          <InstagramIcon className="w-4 h-4" />
           @la_casita_de_luca
           <ExternalLink className="w-3 h-3" />
         </a>
@@ -89,7 +89,7 @@ export default function InstagramFeed() {
                       className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-xl"
                     />
                     <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045] flex items-center justify-center">
-                      <Instagram className="w-4 h-4 text-white" />
+                      <InstagramIcon className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ export default function InstagramFeed() {
                   Fotos y videos de nuestros huéspedes peludos todos los días
                 </p>
                 <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white font-bold py-3 px-8 rounded-full text-sm group-hover:opacity-90 transition-opacity">
-                  <Instagram className="w-4 h-4" />
+                  <InstagramIcon className="w-4 h-4" />
                   Seguir en Instagram
                 </span>
               </div>
