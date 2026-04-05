@@ -26,8 +26,8 @@ export default function AdminPage() {
     forceUpdate((n) => n + 1)
   }
 
-  const sizeLabel = { small: 'Peque\u00f1o', medium: 'Mediano', large: 'Grande' }
-  const sizeEmoji = { small: '\ud83d\udc36', medium: '\ud83d\udc15', large: '\ud83e\uddae' }
+  const sizeLabel = { small: 'Pequeño', medium: 'Mediano', large: 'Grande' }
+  const sizeEmoji = { small: '🐶', medium: '🐕', large: '🦮' }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10 md:py-16">
@@ -37,7 +37,7 @@ export default function AdminPage() {
           Panel Admin
         </span>
         <h1 className="text-3xl md:text-4xl font-extrabold text-charcoal mb-2">
-          Administraci\u00f3n
+          Administración
         </h1>
         <p className="text-mutedText">Configura capacidades y gestiona reservas</p>
       </div>
@@ -45,7 +45,7 @@ export default function AdminPage() {
       <div className="bg-white rounded-2xl border border-border p-6 md:p-8 mb-8">
         <h2 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
           <Settings className="w-5 h-5 text-teal" />
-          Capacidad por Tama\u00f1o
+          Capacidad por Tamaño
         </h2>
         <div className="grid grid-cols-3 gap-4 mb-6">
           {Object.entries(sizeLabel).map(([key, label]) => (
@@ -72,14 +72,14 @@ export default function AdminPage() {
               : 'bg-teal hover:bg-tealDark text-white shadow-lg shadow-teal/25'
           }`}
         >
-          {saved ? <><Check className="w-5 h-5" /> \u00a1Guardado!</> : <><Save className="w-5 h-5" /> Guardar Capacidad</>}
+          {saved ? <><Check className="w-5 h-5" /> ¡Guardado!</> : <><Save className="w-5 h-5" /> Guardar Capacidad</>}
         </button>
       </div>
 
       <div className="bg-white rounded-2xl border border-border p-6 md:p-8">
         <h2 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
           <Calendar className="w-5 h-5 text-teal" />
-          Reservas del D\u00eda
+          Reservas del Día
         </h2>
 
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
@@ -119,7 +119,7 @@ export default function AdminPage() {
         {bookings.length === 0 ? (
           <div className="text-center py-8 text-mutedText">
             <Dog className="w-10 h-10 mx-auto mb-3 text-border" />
-            <p className="font-medium">No hay reservas para este d\u00eda</p>
+            <p className="font-medium">No hay reservas para este día</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -130,7 +130,7 @@ export default function AdminPage() {
                   <div>
                     <span className="font-bold text-charcoal">{b.dogName}</span>
                     <span className="text-sm text-mutedText ml-2">({sizeLabel[b.size]})</span>
-                    <div className="text-sm text-mutedText">{b.ownerName} \u00b7 {b.phone}</div>
+                    <div className="text-sm text-mutedText">{b.ownerName} · {b.phone}</div>
                   </div>
                 </div>
                 <button

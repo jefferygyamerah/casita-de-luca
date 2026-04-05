@@ -5,9 +5,9 @@ import { ChevronLeft, ChevronRight, Dog, Check, AlertCircle, Calendar } from 'lu
 import { getAvailability, addBooking, getCapacity } from '../data/bookingStore'
 
 const SIZE_LABELS = {
-  small: { label: 'Peque\u00f1o', desc: '< 10 kg', emoji: '\ud83d\udc36' },
-  medium: { label: 'Mediano', desc: '10\u201325 kg', emoji: '\ud83d\udc15' },
-  large: { label: 'Grande', desc: '> 25 kg', emoji: '\ud83e\uddae' },
+  small: { label: 'Pequeño', desc: '< 10 kg', emoji: '🐶' },
+  medium: { label: 'Mediano', desc: '10–25 kg', emoji: '🐕' },
+  large: { label: 'Grande', desc: '> 25 kg', emoji: '🦮' },
 }
 
 function AvailabilityBadge({ available, total }) {
@@ -71,7 +71,7 @@ export default function BookingPage() {
         <h1 className="text-3xl md:text-4xl font-extrabold text-charcoal mb-2">
           Reservar Hospedaje
         </h1>
-        <p className="text-mutedText">Selecciona una fecha y el tama\u00f1o de tu perrito</p>
+        <p className="text-mutedText">Selecciona una fecha y el tamaño de tu perrito</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-border p-6 mb-8">
@@ -177,11 +177,11 @@ export default function BookingPage() {
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-border p-6 md:p-8">
           <h3 className="font-bold text-xl text-charcoal mb-6 flex items-center gap-2">
             <Dog className="w-5 h-5 text-teal" />
-            Datos de la reserva \u2014 {format(selectedDate, "d 'de' MMMM", { locale: es })}
+            Datos de la reserva — {format(selectedDate, "d 'de' MMMM", { locale: es })}
           </h3>
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-semibold text-charcoal mb-1.5">Nombre del due\u00f1o</label>
+              <label className="block text-sm font-semibold text-charcoal mb-1.5">Nombre del dueño</label>
               <input
                 required
                 autoComplete="name"
@@ -204,7 +204,7 @@ export default function BookingPage() {
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-charcoal mb-1.5">Tel\u00e9fono / WhatsApp</label>
+            <label className="block text-sm font-semibold text-charcoal mb-1.5">Teléfono / WhatsApp</label>
             <input
               required
               type="tel"
@@ -242,7 +242,7 @@ export default function BookingPage() {
             <>
               <Check className="w-6 h-6 text-successGreen flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold text-successGreen">\u00a1Reserva confirmada!</p>
+                <p className="font-bold text-successGreen">¡Reserva confirmada!</p>
                 <p className="text-sm text-bodyText mt-1">
                   {result.booking.dogName} tiene su lugar reservado para el {format(selectedDate, "d 'de' MMMM", { locale: es })}.
                   Te contactaremos por WhatsApp para confirmar los detalles.

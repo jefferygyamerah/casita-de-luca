@@ -9,18 +9,6 @@ const navLinks = [
   { to: '/admin', label: 'Admin', icon: Settings },
 ]
 
-function PawLogo({ className = '' }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
-      <ellipse cx="16" cy="19" rx="7" ry="6" fill="currentColor" />
-      <ellipse cx="9" cy="12" rx="3" ry="2.5" fill="currentColor" />
-      <ellipse cx="23" cy="12" rx="3" ry="2.5" fill="currentColor" />
-      <ellipse cx="12.5" cy="9.5" rx="2.8" ry="2.3" fill="currentColor" />
-      <ellipse cx="19.5" cy="9.5" rx="2.8" ry="2.3" fill="currentColor" />
-    </svg>
-  )
-}
-
 export default function Layout() {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -133,7 +121,7 @@ export default function Layout() {
             Con amor, Jona & Cristy
           </p>
           <p className="text-sm">
-            En memoria de Luca Toni \u2665 14 a\u00f1os de alegr\u00eda perruna
+            En memoria de Luca Toni ♥ 14 años de alegría perruna
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mt-4">
             <a href="https://wa.me/50766746941" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-teal transition-colors text-sm">
@@ -144,7 +132,7 @@ export default function Layout() {
             </a>
           </div>
           <div className="mt-4 text-xs text-white/40">
-            \u00a9 {new Date().getFullYear()} La Casita de Luca. Todos los derechos reservados.
+            © {new Date().getFullYear()} La Casita de Luca. Todos los derechos reservados.
           </div>
         </div>
       </footer>

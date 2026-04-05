@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { ChevronRight, ChevronLeft, ChevronDown, Check, User, Dog, Heart, FileText, PawPrint } from 'lucide-react'
 
 const STEPS = [
-  { id: 'owner', title: 'Sobre Ti', subtitle: 'Datos del due\u00f1o', icon: User },
+  { id: 'owner', title: 'Sobre Ti', subtitle: 'Datos del dueño', icon: User },
   { id: 'dog', title: 'Tu Perrito', subtitle: 'Datos de tu peludo', icon: Dog },
-  { id: 'health', title: 'Salud', subtitle: 'Info m\u00e9dica importante', icon: Heart },
-  { id: 'preferences', title: 'Preferencias', subtitle: 'C\u00f3mo le gusta pasarla', icon: FileText },
+  { id: 'health', title: 'Salud', subtitle: 'Info médica importante', icon: Heart },
+  { id: 'preferences', title: 'Preferencias', subtitle: 'Cómo le gusta pasarla', icon: FileText },
 ]
 
 const INITIAL_DATA = {
@@ -139,13 +139,13 @@ export default function OnboardingPage() {
           <Check className="w-10 h-10 text-teal" />
         </div>
         <h1 className="text-3xl font-extrabold text-charcoal mb-4">
-          \u00a1Registro Completo!
+          ¡Registro Completo!
         </h1>
         <p className="text-lg text-bodyText mb-2">
-          <strong>{data.dogName}</strong> ya est\u00e1 registrado en La Casita de Luca.
+          <strong>{data.dogName}</strong> ya está registrado en La Casita de Luca.
         </p>
         <p className="text-mutedText">
-          Jona &amp; Cristy revisar\u00e1n la informaci\u00f3n y te contactar\u00e1n por WhatsApp para coordinar la primera visita.
+          Jona &amp; Cristy revisarán la información y te contactarán por WhatsApp para coordinar la primera visita.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
@@ -172,24 +172,24 @@ export default function OnboardingPage() {
     <div key="owner" className="space-y-4">
       <div className="bg-tealLight/50 rounded-xl p-4 mb-2">
         <p className="text-sm text-tealDark font-medium">
-          \ud83d\udc4b \u00a1Hola! Empecemos con tus datos. Esto nos ayuda a mantenerte informado sobre tu perrito.
+          👋 ¡Hola! Empecemos con tus datos. Esto nos ayuda a mantenerte informado sobre tu perrito.
         </p>
       </div>
-      <InputField label="Tu nombre completo" required autoComplete="name" value={data.ownerName} onChange={(e) => update('ownerName', e.target.value)} placeholder="Ej: Mar\u00eda Garc\u00eda" />
+      <InputField label="Tu nombre completo" required autoComplete="name" value={data.ownerName} onChange={(e) => update('ownerName', e.target.value)} placeholder="Ej: María García" />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InputField label="Tel\u00e9fono / WhatsApp" required type="tel" autoComplete="tel" value={data.ownerPhone} onChange={(e) => update('ownerPhone', e.target.value)} placeholder="+507 6000-0000" />
-        <InputField label="Correo electr\u00f3nico" type="email" autoComplete="email" value={data.ownerEmail} onChange={(e) => update('ownerEmail', e.target.value)} placeholder="tu@email.com" />
+        <InputField label="Teléfono / WhatsApp" required type="tel" autoComplete="tel" value={data.ownerPhone} onChange={(e) => update('ownerPhone', e.target.value)} placeholder="+507 6000-0000" />
+        <InputField label="Correo electrónico" type="email" autoComplete="email" value={data.ownerEmail} onChange={(e) => update('ownerEmail', e.target.value)} placeholder="tu@email.com" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InputField label="Contacto de emergencia" required value={data.emergencyContact} onChange={(e) => update('emergencyContact', e.target.value)} placeholder="Nombre" />
-        <InputField label="Tel\u00e9fono de emergencia" required value={data.emergencyPhone} onChange={(e) => update('emergencyPhone', e.target.value)} placeholder="+507 6000-0000" />
+        <InputField label="Teléfono de emergencia" required value={data.emergencyPhone} onChange={(e) => update('emergencyPhone', e.target.value)} placeholder="+507 6000-0000" />
       </div>
     </div>,
 
     <div key="dog" className="space-y-4">
       <div className="bg-coralLight/50 rounded-xl p-4 mb-2">
         <p className="text-sm text-coralDark font-medium">
-          \ud83d\udc3e \u00a1Cu\u00e9ntanos sobre tu perrito! Queremos conocerlo para darle la mejor experiencia.
+          🐾 ¡Cuéntanos sobre tu perrito! Queremos conocerlo para darle la mejor experiencia.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -197,7 +197,7 @@ export default function OnboardingPage() {
         <InputField label="Raza" required value={data.breed} onChange={(e) => update('breed', e.target.value)} placeholder="Ej: French Bulldog" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <InputField label="Edad" required value={data.age} onChange={(e) => update('age', e.target.value)} placeholder="Ej: 3 a\u00f1os" />
+        <InputField label="Edad" required value={data.age} onChange={(e) => update('age', e.target.value)} placeholder="Ej: 3 años" />
         <InputField label="Peso (kg)" required value={data.weight} onChange={(e) => update('weight', e.target.value)} placeholder="Ej: 8" />
         <SelectField
           label="Sexo"
@@ -211,12 +211,12 @@ export default function OnboardingPage() {
         />
       </div>
       <SelectField
-        label="\u00bfEst\u00e1 esterilizado/a?"
+        label="¿Está esterilizado/a?"
         required
         value={data.neutered}
         onChange={(e) => update('neutered', e.target.value)}
         options={[
-          { value: 'yes', label: 'S\u00ed' },
+          { value: 'yes', label: 'Sí' },
           { value: 'no', label: 'No' },
         ]}
       />
@@ -225,37 +225,37 @@ export default function OnboardingPage() {
     <div key="health" className="space-y-4">
       <div className="bg-tealLight/50 rounded-xl p-4 mb-2">
         <p className="text-sm text-tealDark font-medium">
-          \ud83d\udc89 Info m\u00e9dica importante para cuidar bien a tu perrito.
+          💉 Info médica importante para cuidar bien a tu perrito.
         </p>
       </div>
       <SelectField
-        label="\u00bfTiene vacunas al d\u00eda?"
+        label="¿Tiene vacunas al día?"
         required
         value={data.vaccinated}
         onChange={(e) => update('vaccinated', e.target.value)}
         options={[
-          { value: 'yes', label: 'S\u00ed, todas al d\u00eda' },
+          { value: 'yes', label: 'Sí, todas al día' },
           { value: 'partial', label: 'Algunas pendientes' },
           { value: 'no', label: 'No' },
         ]}
       />
-      <InputField label="Fecha de \u00faltima vacuna" type="date" value={data.lastVaccine} onChange={(e) => update('lastVaccine', e.target.value)} />
-      <TextAreaField label="\u00bfTiene alergias?" value={data.allergies} onChange={(e) => update('allergies', e.target.value)} placeholder="Describe si tiene alguna alergia conocida" />
-      <TextAreaField label="Medicamentos actuales" value={data.medications} onChange={(e) => update('medications', e.target.value)} placeholder="\u00bfToma alg\u00fan medicamento? Incluye dosis y horarios" />
+      <InputField label="Fecha de última vacuna" type="date" value={data.lastVaccine} onChange={(e) => update('lastVaccine', e.target.value)} />
+      <TextAreaField label="¿Tiene alergias?" value={data.allergies} onChange={(e) => update('allergies', e.target.value)} placeholder="Describe si tiene alguna alergia conocida" />
+      <TextAreaField label="Medicamentos actuales" value={data.medications} onChange={(e) => update('medications', e.target.value)} placeholder="¿Toma algún medicamento? Incluye dosis y horarios" />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InputField label="Nombre del veterinario" value={data.vetName} onChange={(e) => update('vetName', e.target.value)} placeholder="Dr. / Cl\u00ednica" />
-        <InputField label="Tel\u00e9fono del veterinario" value={data.vetPhone} onChange={(e) => update('vetPhone', e.target.value)} placeholder="+507 ..." />
+        <InputField label="Nombre del veterinario" value={data.vetName} onChange={(e) => update('vetName', e.target.value)} placeholder="Dr. / Clínica" />
+        <InputField label="Teléfono del veterinario" value={data.vetPhone} onChange={(e) => update('vetPhone', e.target.value)} placeholder="+507 ..." />
       </div>
     </div>,
 
     <div key="preferences" className="space-y-4">
       <div className="bg-coralLight/50 rounded-xl p-4 mb-2">
         <p className="text-sm text-coralDark font-medium">
-          \ud83c\udfbe \u00a1\u00daltimo paso! Cu\u00e9ntanos c\u00f3mo le gusta pasarla a tu perrito.
+          🎾 ¡Último paso! Cuéntanos cómo le gusta pasarla a tu perrito.
         </p>
       </div>
       <SelectField
-        label="\u00bfCome comida casera o concentrado?"
+        label="¿Come comida casera o concentrado?"
         required
         value={data.feeding}
         onChange={(e) => update('feeding', e.target.value)}
@@ -271,19 +271,19 @@ export default function OnboardingPage() {
         <InputField label="Horario de comida" value={data.feedingSchedule} onChange={(e) => update('feedingSchedule', e.target.value)} placeholder="Ej: 7 AM y 5 PM" />
       </div>
       <SelectField
-        label="\u00bfC\u00f3mo se lleva con otros perros?"
+        label="¿Cómo se lleva con otros perros?"
         required
         value={data.socialization}
         onChange={(e) => update('socialization', e.target.value)}
         options={[
           { value: 'great', label: 'Excelente, le encanta jugar' },
           { value: 'good', label: 'Bien, pero necesita tiempo' },
-          { value: 'shy', label: 'Es t\u00edmido/a al principio' },
+          { value: 'shy', label: 'Es tímido/a al principio' },
           { value: 'selective', label: 'Selectivo, depende del perro' },
           { value: 'not_good', label: 'No se lleva bien' },
         ]}
       />
-      <TextAreaField label="\u00bfTiene miedos o fobias?" value={data.fears} onChange={(e) => update('fears', e.target.value)} placeholder="Ej: Truenos, aspiradora, personas con gorra..." />
+      <TextAreaField label="¿Tiene miedos o fobias?" value={data.fears} onChange={(e) => update('fears', e.target.value)} placeholder="Ej: Truenos, aspiradora, personas con gorra..." />
       <TextAreaField label="Instrucciones especiales" value={data.specialInstructions} onChange={(e) => update('specialInstructions', e.target.value)} placeholder="Cualquier otra cosa que debamos saber..." />
     </div>,
   ]
@@ -317,7 +317,7 @@ export default function OnboardingPage() {
               className="flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-border bg-white text-charcoal font-semibold hover:bg-bgGray transition-all"
             >
               <ChevronLeft className="w-4 h-4" />
-              Atr\u00e1s
+              Atrás
             </button>
           ) : (
             <div />
