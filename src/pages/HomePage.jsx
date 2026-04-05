@@ -64,53 +64,67 @@ export default function HomePage() {
           <PawPrint className="absolute top-16 right-1/3 w-4 h-4 text-coral/10 rotate-[-15deg]" />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 py-20 md:py-32">
-          <div className="max-w-2xl mx-auto text-center">
-            {/* Logo mark */}
-            <div className="flex justify-center mb-6">
-              <img
-                src="/logo.jpg"
-                alt="La Casita de Luca"
-                className="w-24 h-24 rounded-full object-cover shadow-xl shadow-teal/25 border-4 border-white ring-2 ring-tealMuted"
-              />
+        <div className="relative max-w-6xl mx-auto px-4 py-16 md:py-24">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+
+            {/* Left — text */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="flex justify-center lg:justify-start mb-6">
+                <img
+                  src="/logo.jpg"
+                  alt="La Casita de Luca"
+                  className="w-20 h-20 rounded-full object-cover shadow-xl shadow-teal/25 border-4 border-white ring-2 ring-tealMuted"
+                />
+              </div>
+
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-tealMuted/40 text-tealDark font-semibold text-sm px-4 py-1.5 rounded-full mb-6 shadow-sm">
+                <span className="w-2 h-2 bg-teal rounded-full" style={{ animation: 'pulse 2s infinite' }} />
+                Hospedaje VIP · Panamá
+              </div>
+
+              <h1 className="text-4xl md:text-5xl font-extrabold text-charcoal leading-tight mb-6">
+                Donde tu perrito es{' '}
+                <span className="text-coral">familia</span>
+              </h1>
+              <p className="text-lg text-bodyText leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
+                Hospedaje en hogar para perritos en Panamá — amor genuino, fotos diarias
+                y el legado de Luca Toni.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link
+                  to="/reservar"
+                  className="inline-flex items-center justify-center gap-2 bg-teal hover:bg-tealDark text-white font-bold py-3.5 px-8 rounded-xl text-lg transition-all shadow-lg shadow-teal/25 hover:shadow-xl hover:shadow-tealDark/30 no-underline"
+                >
+                  <Calendar className="w-5 h-5" />
+                  Reservar Ahora
+                </Link>
+                <Link
+                  to="/registro"
+                  className="inline-flex items-center justify-center gap-2 bg-white hover:bg-bgGray text-charcoal font-bold py-3.5 px-8 rounded-xl text-lg border-2 border-border hover:border-tealMuted transition-all no-underline"
+                >
+                  <ClipboardList className="w-5 h-5" />
+                  Registrar Perrito
+                </Link>
+              </div>
+
+              {/* Trust signals */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-2 mt-8 text-sm text-mutedText font-medium">
+                <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-warningAmber fill-warningAmber" /> 5.0 en reseñas</span>
+                <span className="flex items-center gap-1.5"><Camera className="w-4 h-4 text-teal" /> Fotos diarias</span>
+                <span className="flex items-center gap-1.5"><Heart className="w-4 h-4 text-coral" /> Hogar familiar</span>
+              </div>
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-tealMuted/40 text-tealDark font-semibold text-sm px-4 py-1.5 rounded-full mb-6 shadow-sm">
-              <span className="w-2 h-2 bg-teal rounded-full" style={{ animation: 'pulse 2s infinite' }} />
-              Hospedaje VIP · Panamá
+            {/* Right — Instagram Reel */}
+            <div className="w-full lg:w-auto lg:flex-shrink-0 flex justify-center">
+              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-teal/15">
+                <InstagramEmbed
+                  url="https://www.instagram.com/reel/DU4ppL9gBco/"
+                  width={328}
+                />
+              </div>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold text-charcoal leading-tight mb-6">
-              Donde tu perrito es{' '}
-              <span className="text-coral">familia</span>
-            </h1>
-            <p className="text-lg md:text-xl text-bodyText leading-relaxed mb-10 max-w-xl mx-auto">
-              Hospedaje en hogar para perritos en Panamá — amor genuino, fotos diarias
-              y el legado de Luca Toni.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/reservar"
-                className="inline-flex items-center justify-center gap-2 bg-teal hover:bg-tealDark text-white font-bold py-3.5 px-8 rounded-xl text-lg transition-all shadow-lg shadow-teal/25 hover:shadow-xl hover:shadow-tealDark/30 no-underline"
-              >
-                <Calendar className="w-5 h-5" />
-                Reservar Ahora
-              </Link>
-              <Link
-                to="/registro"
-                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-bgGray text-charcoal font-bold py-3.5 px-8 rounded-xl text-lg border-2 border-border hover:border-tealMuted transition-all no-underline"
-              >
-                <ClipboardList className="w-5 h-5" />
-                Registrar Perrito
-              </Link>
-            </div>
-
-            {/* Trust signals */}
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-10 text-sm text-mutedText font-medium">
-              <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-warningAmber fill-warningAmber" /> 5.0 en reseñas</span>
-              <span className="flex items-center gap-1.5"><Camera className="w-4 h-4 text-teal" /> Fotos diarias</span>
-              <span className="flex items-center gap-1.5"><Heart className="w-4 h-4 text-coral" /> Hogar familiar</span>
-            </div>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0">
