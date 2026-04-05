@@ -5,10 +5,10 @@ import { getHuespedcitos } from '../../data/contentStore'
 const PLACEHOLDERS = [
   { name: 'Coco', breed: 'Pomeranian', personality: 'El rey de los mimos y los rulos.', bg: 'from-tealLight to-tealMuted' },
   { name: 'Max', breed: 'Golden Retriever', personality: 'Siempre listo para jugar con todos.', bg: 'from-softPeach to-coralLight' },
-  { name: 'Luna', breed: 'French Bulldog', personality: 'Pequeña pero con carácter enorme.', bg: 'from-coralLight to-coralMuted/30' },
+  { name: 'Luna', breed: 'French Bulldog', personality: 'Pequeña pero con carácter enorme.', bg: 'from-coralLight to-coralMuted' },
   { name: 'Bruno', breed: 'Labrador', personality: 'El más feliz del grupo, siempre.', bg: 'from-tealLight to-tealMuted' },
   { name: 'Mia', breed: 'Shih Tzu', personality: 'Princesa oficial de La Casita.', bg: 'from-softPeach to-coralLight' },
-  { name: 'Rocky', breed: 'Beagle', personality: 'Nariz detective, corazón de oro.', bg: 'from-tealMuted/40 to-tealLight' },
+  { name: 'Rocky', breed: 'Beagle', personality: 'Nariz detective, corazón de oro.', bg: 'from-tealMuted to-tealLight' },
 ]
 
 function PlaceholderCard({ name, breed, personality, bg, delay }) {
