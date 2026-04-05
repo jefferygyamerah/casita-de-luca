@@ -113,12 +113,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right — Instagram Reel */}
+            {/* Right — hero video */}
             <div className="w-full lg:w-auto lg:flex-shrink-0 flex justify-center">
-              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-teal/15">
-                <InstagramEmbed
-                  url="https://www.instagram.com/reel/DU4ppL9gBco/"
-                  width={328}
+              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-teal/15" style={{ width: 288, height: 512 }}>
+                <iframe
+                  allow="fullscreen;autoplay"
+                  allowFullScreen
+                  src="https://streamable.com/e/cngsnj?autoplay=1&muted=1"
+                  width="288"
+                  height="512"
+                  style={{ border: 'none', display: 'block' }}
+                  title="La Casita de Luca"
                 />
               </div>
             </div>
