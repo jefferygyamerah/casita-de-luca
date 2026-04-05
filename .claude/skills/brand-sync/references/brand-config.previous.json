@@ -1,0 +1,6 @@
+{
+  "_instructions": "Auto-populated when /brand-sync runs. Contains the previous brand config before the last update.",
+  "version": null,
+  "previous": {},
+  "current": {}
+}
