@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Paw print favicon for La Casita de Luca -->
+  <!-- Main pad -->
+  <ellipse cx="16" cy="19" rx="7" ry="6" fill="#7DD3D8"/>
+  <!-- Toe pads -->
+  <ellipse cx="9" cy="12" rx="3" ry="2.5" fill="#7DD3D8"/>
+  <ellipse cx="23" cy="12" rx="3" ry="2.5" fill="#7DD3D8"/>
+  <ellipse cx="12.5" cy="9.5" rx="2.8" ry="2.3" fill="#7DD3D8"/>
+  <ellipse cx="19.5" cy="9.5" rx="2.8" ry="2.3" fill="#7DD3D8"/>
+</svg>

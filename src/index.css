@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-teal: #7DD3D8;
+  --color-tealDark: #5BB8BD;
+  --color-tealLight: #E8F7F8;
+  --color-tealMuted: #B5E5E8;
+  --color-coral: #E85D5D;
+  --color-coralDark: #D14545;
+  --color-coralLight: #FDE8E8;
+  --color-coralMuted: #F2A5A5;
+  --color-charcoal: #2D2D2D;
+  --color-pinkTongue: #E8838B;
+  --color-warmCream: #FFFAF6;
+  --color-softPeach: #FFF0E6;
+  --color-white: #FFFFFF;
+  --color-darkText: #2D2D2D;
+  --color-bodyText: #4A4A4A;
+  --color-mutedText: #8A8A8A;
+  --color-border: #E8E2DC;
+  --color-borderLight: #F3EDE7;
+  --color-bgGray: #F8F5F2;
+  --color-successGreen: #52B788;
+  --color-errorRed: #E63946;
+  --color-warningAmber: #F4A261;
+  --font-heading: 'Nunito', system-ui, sans-serif;
+  --font-body: 'Quicksand', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-bodyText);
+  background-color: var(--color-warmCream);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-charcoal);
+}
