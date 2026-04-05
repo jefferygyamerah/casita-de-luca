@@ -47,9 +47,11 @@ export default function Layout() {
       <header className="bg-white border-b border-border sticky top-0 z-50" ref={menuRef}>
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 no-underline group">
-            <div className="w-10 h-10 bg-teal rounded-full flex items-center justify-center shadow-sm shadow-teal/30 group-hover:bg-tealDark transition-colors">
-              <PawLogo className="w-6 h-6 text-white" />
-            </div>
+            <img
+              src="/logo.jpg"
+              alt="La Casita de Luca"
+              className="w-10 h-10 rounded-full object-cover shadow-sm shadow-teal/30 group-hover:opacity-90 transition-opacity"
+            />
             <div>
               <span className="font-heading font-bold text-lg text-charcoal leading-tight block">
                 La Casita <span className="text-coral">de Luca</span>
@@ -122,7 +124,7 @@ export default function Layout() {
       <footer className="bg-charcoal text-white/70 py-10">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <PawLogo className="w-5 h-5 text-teal" />
+            <img src="/logo.jpg" alt="La Casita de Luca" className="w-8 h-8 rounded-full object-cover" />
             <span className="font-heading font-bold text-white text-lg">
               La Casita <span className="text-coral">de Luca</span>
             </span>

@@ -64,9 +64,11 @@ export default function HomePage() {
           <div className="max-w-2xl mx-auto text-center">
             {/* Logo mark */}
             <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg shadow-teal/20 border-4 border-tealLight">
-                <PawPrint className="w-10 h-10 text-teal" />
-              </div>
+              <img
+                src="/logo.jpg"
+                alt="La Casita de Luca"
+                className="w-24 h-24 rounded-full object-cover shadow-xl shadow-teal/25 border-4 border-white ring-2 ring-tealMuted"
+              />
             </div>
 
             <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-tealMuted/40 text-tealDark font-semibold text-sm px-4 py-1.5 rounded-full mb-6 shadow-sm">
