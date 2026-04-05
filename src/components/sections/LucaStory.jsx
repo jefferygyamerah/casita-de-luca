@@ -1,10 +1,12 @@
 import { Heart } from 'lucide-react'
 import Section from '../ui/Section'
 import useScrollReveal from '../../hooks/useScrollReveal'
+import { getLucaPhoto } from '../../data/contentStore'
 
 export default function LucaStory() {
   const leftRef = useScrollReveal(0)
   const rightRef = useScrollReveal(100)
+  const lucaPhoto = getLucaPhoto()
 
   return (
     <Section bg="bg-white">
@@ -13,16 +15,20 @@ export default function LucaStory() {
         {/* Visual — Luca placeholder */}
         <div ref={leftRef} className="order-2 lg:order-1">
           <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-tealLight via-warmCream to-coralLight aspect-square max-w-md mx-auto flex items-center justify-center shadow-xl shadow-teal/10">
-            <div className="text-center">
-              <div className="text-8xl mb-4" aria-hidden="true">🐾</div>
-              <p
-                className="font-extrabold text-charcoal text-2xl"
-                style={{ fontFamily: 'var(--font-heading)' }}
-              >
-                Luca Toni
-              </p>
-              <p className="text-mutedText text-sm mt-1">14 años de alegría perruna</p>
-            </div>
+            {lucaPhoto ? (
+              <img src={lucaPhoto} alt="Luca Toni" className="w-full h-full object-cover" />
+            ) : (
+              <div className="text-center">
+                <div className="text-8xl mb-4" aria-hidden="true">🐾</div>
+                <p
+                  className="font-extrabold text-charcoal text-2xl"
+                  style={{ fontFamily: 'var(--font-heading)' }}
+                >
+                  Luca Toni
+                </p>
+                <p className="text-mutedText text-sm mt-1">14 años de alegría perruna</p>
+              </div>
+            )}
           </div>
         </div>
 
