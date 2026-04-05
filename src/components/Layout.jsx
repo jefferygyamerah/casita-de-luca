@@ -1,13 +1,25 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
-import { Dog, Calendar, ClipboardList, Settings, Menu, X } from 'lucide-react'
+import { Calendar, ClipboardList, Settings, Menu, X } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 
 const navLinks = [
-  { to: '/', label: 'Inicio', icon: Dog },
+  { to: '/', label: 'Inicio' },
   { to: '/reservar', label: 'Reservar', icon: Calendar },
   { to: '/registro', label: 'Registro', icon: ClipboardList },
   { to: '/admin', label: 'Admin', icon: Settings },
 ]
+
+function PawLogo({ className = '' }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
+      <ellipse cx="16" cy="19" rx="7" ry="6" fill="currentColor" />
+      <ellipse cx="9" cy="12" rx="3" ry="2.5" fill="currentColor" />
+      <ellipse cx="23" cy="12" rx="3" ry="2.5" fill="currentColor" />
+      <ellipse cx="12.5" cy="9.5" rx="2.8" ry="2.3" fill="currentColor" />
+      <ellipse cx="19.5" cy="9.5" rx="2.8" ry="2.3" fill="currentColor" />
+    </svg>
+  )
+}
 
 export default function Layout() {
   const location = useLocation()
@@ -34,16 +46,16 @@ export default function Layout() {
     <div className="min-h-screen flex flex-col">
       <header className="bg-white border-b border-border sticky top-0 z-50" ref={menuRef}>
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 no-underline">
-            <div className="w-10 h-10 bg-tealLight rounded-full flex items-center justify-center">
-              <Dog className="w-6 h-6 text-teal" />
+          <Link to="/" className="flex items-center gap-3 no-underline group">
+            <div className="w-10 h-10 bg-teal rounded-full flex items-center justify-center shadow-sm shadow-teal/30 group-hover:bg-tealDark transition-colors">
+              <PawLogo className="w-6 h-6 text-white" />
             </div>
             <div>
               <span className="font-heading font-bold text-lg text-charcoal leading-tight block">
-                La Casita de Luca
+                La Casita <span className="text-coral">de Luca</span>
               </span>
               <span className="text-xs text-mutedText font-medium">
-                Cuidamos a tu perrito como si fuera nuestro Luca
+                Hospedaje VIP para perritos en Panamá
               </span>
             </div>
           </Link>
@@ -61,7 +73,7 @@ export default function Layout() {
                       : 'text-mutedText hover:bg-bgGray hover:text-charcoal'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  {Icon && <Icon className="w-4 h-4" />}
                   {label}
                 </Link>
               )
@@ -94,7 +106,7 @@ export default function Layout() {
                       : 'text-mutedText hover:bg-bgGray hover:text-charcoal'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  {Icon && <Icon className="w-5 h-5" />}
                   {label}
                 </Link>
               )
@@ -110,9 +122,9 @@ export default function Layout() {
       <footer className="bg-charcoal text-white/70 py-10">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Dog className="w-5 h-5 text-teal" />
+            <PawLogo className="w-5 h-5 text-teal" />
             <span className="font-heading font-bold text-white text-lg">
-              La Casita de Luca
+              La Casita <span className="text-coral">de Luca</span>
             </span>
           </div>
           <p className="text-sm mb-1">
