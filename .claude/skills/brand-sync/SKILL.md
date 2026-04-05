@@ -1,16 +1,15 @@
 ---
 name: brand-sync
 description: >
-  Propagate branding (logo, colors, fonts, spacing) across all Visto HTML pages
-  and JSX prototypes. Trigger when: user provides a branding kit, logo file, or
-  updated color palette; user says "update branding", "sync brand", "apply new
-  colors", "propagate logo", "brand-sync"; or when brand tokens need updating
-  across the soyvisto repo.
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Agent
-argument-hint: "[--dry-run] [--colors-only] [--logo-only] [--upload]"
+  Propagate branding (colors, fonts, logo tokens) across all Casita de Luca
+  React components and pages. Trigger when: user provides updated colors or logo;
+  user says "update branding", "sync brand", "apply new colors", "brand-sync";
+  or when brand tokens drift from the source of truth in brand-config.json.
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep
+argument-hint: "[--dry-run] [--colors-only] [--fonts-only]"
 ---
 
-# /brand-sync — Propagate Branding Across All Visto Pages
+# /brand-sync — Propagate Branding Across La Casita de Luca
 
 **First:** Read `LEARNINGS.md` in this skill's directory.
 
@@ -18,118 +17,83 @@ argument-hint: "[--dry-run] [--colors-only] [--logo-only] [--upload]"
 
 ## Step 1: Load Current Brand Config
 
-Read `references/brand-config.json` in this skill's directory. This is the single source of truth for all brand tokens.
+Read `references/brand-config.json` in this skill's directory. This is the single source of truth.
 
-If the user is providing a NEW branding kit, update `brand-config.json` first with the new values before propagating.
+If the user is providing NEW branding values, update `brand-config.json` first (backing up current to `references/brand-config.previous.json`) before propagating.
 
 The config contains:
-- `colors`: all color hex values (green, greenDark, greenLight, greenMid, dark, darkMid, text, textMuted, textLight, border, borderLight, bg, red, redLight)
-- `fonts`: heading and body font families
-- `logo`: path to logo file, wordmark text, wordmark HTML
-- `spacing`: base grid unit
+- `colors`: all color hex values with semantic names
+- `fonts`: heading (Nunito) and body (Quicksand) font families + Google Fonts URL
+- `logo`: favicon path, brand name, primary/accent colors
 
 ## Step 2: Scan Target Files
 
-Find all files that contain brand tokens:
+Find all files containing brand tokens:
 
 ```bash
-# HTML pages (standalone)
-find ~/soyvisto -maxdepth 1 -name "*.html" -type f
+# CSS theme (primary source)
+cat src/index.css
 
-# JSX prototypes
-find ~/soyvisto/visto-project-files -name "*.jsx" -type f
+# React components and pages
+find src -name "*.jsx" -o -name "*.tsx" | sort
 
-# Test fixtures
-find ~/soyvisto/tests -name "*.html" -type f
+# HTML entry point (font import)
+cat index.html
 ```
-
-Build a list of files to update. Report count to user.
 
 ## Step 3: Identify Token Locations
 
-For each file, identify which brand tokens are present and where:
+For each file, identify which brand tokens are present:
 
-1. **Tailwind config blocks** — `tailwind.config = { theme: { extend: { colors: { ... }}}}`
-2. **CSS `const C` objects** — `const C = { green: "#1AB87A", ... }` (in JSX files)
-3. **Inline hex values** — any hardcoded hex that matches a current brand color
-4. **Font references** — Google Fonts import URLs, font-family declarations
-5. **Logo/wordmark** — `Visto<span ...>.</span>` pattern in nav bars
-6. **Rgba values** — `rgba(26,184,122,...)` patterns (derived from brand green #1AB87A = rgb(26,184,122))
+1. **`src/index.css` `@theme` block** — CSS custom properties (`--color-teal`, `--font-heading`, etc.)
+2. **`index.html` font import** — Google Fonts `<link>` tag
+3. **Hardcoded hex values** in JSX — any hex that matches a current brand color
+4. **Tailwind class names** — `bg-teal`, `text-coral`, etc. (these reference the theme, no change needed unless token names change)
 
-If `--dry-run` flag is passed, report findings without making changes and stop here.
+If `--dry-run` is passed, report findings without making changes and stop here.
 
 ## Step 4: Apply Updates
 
-Run `scripts/brand-sync.py` to perform the replacements:
+The primary target is `src/index.css`. Update the `@theme` block to match `brand-config.json`.
+
+For each changed color, find any hardcoded hex instances in JSX files and replace:
 
 ```bash
-python3 .claude/skills/brand-sync/scripts/brand-sync.py \
-  --config .claude/skills/brand-sync/references/brand-config.json \
-  [--colors-only] [--logo-only] [--dry-run]
+grep -rn "#OLD_HEX" src/
+# Then edit each occurrence
 ```
 
-The script handles:
-- Tailwind config color blocks (exact JSON replacement)
-- CSS const C objects (exact object replacement)
-- Inline hex values (global find/replace with old→new mapping)
-- Rgba derived values (recalculated from new hex)
-- Font import URLs (updated if fonts changed)
-- Logo/wordmark HTML (replaced if logo changed)
+For font changes, update:
+1. `src/index.css` — `--font-heading` and `--font-body` values
+2. `index.html` — Google Fonts import URL
 
 ## Step 5: Verify
 
 After applying changes:
 
-1. Run Playwright tests to ensure nothing broke:
+1. Check no old hex values remain:
    ```bash
-   npx playwright test
+   grep -rn "#OLD_HEX" src/
    ```
 
-2. Spot-check 3 files visually — screenshot with Puppeteer and compare:
+2. Verify `src/index.css` `@theme` block matches `brand-config.json` exactly.
+
+3. Run dev server briefly to confirm no build errors:
    ```bash
-   node screenshot.js <file> /tmp/brand-check.png
+   npm run build 2>&1 | tail -20
    ```
 
-3. Verify no orphaned old hex values remain:
-   ```bash
-   grep -r "OLD_HEX_VALUE" ~/soyvisto/*.html ~/soyvisto/visto-project-files/*.jsx
-   ```
+## Step 6: Commit
 
-## Step 6: Upload to WordPress (if --upload flag)
-
-If the user passes `--upload`, re-upload all changed HTML files to soyvisto.com:
-
-```bash
-export WP_APP_PASSWORD="$WP_APP_PASSWORD"
-for file in CHANGED_FILES; do
-  filename=$(basename "$file")
-  # Delete existing media with same name first
-  # Then upload fresh
-  curl -s -X POST "https://soyvisto.com/wp-json/wp/v2/media" \
-    -u "admin:${WP_APP_PASSWORD}" \
-    -H "Content-Disposition: attachment; filename=${filename}" \
-    -H "Content-Type: text/html" \
-    --data-binary @"$file"
-done
 ```
-
-## Step 7: Commit
-
-Stage changed files, commit with message:
+style: sync brand tokens — [what changed]
 ```
-style: update brand tokens — [what changed]
-```
-
-Push to main. Sync qa and dev branches.
 
 ## Rules
 
-- NEVER hardcode colors anywhere — always reference brand-config.json
 - NEVER change content, layout, or functionality — only brand tokens
-- The `const C = { ... }` object in JSX files and the `tailwind.config` block in HTML files must stay structurally identical — only values change
+- `src/index.css` is the single source of rendering truth — update it first
+- Tailwind class names (e.g. `bg-teal`) do NOT need changing unless token names change
+- If a color isn't in `brand-config.json`, leave it alone
+- Before overwriting `brand-config.json`, copy current to `references/brand-config.previous.json`
 - Rgba values must be recalculated from the new hex, not guessed
-- If a color doesn't exist in brand-config.json, leave it alone
-- Always run tests after applying changes
-- If `--dry-run` is passed, report what WOULD change but don't modify any files
-- Logo updates: the wordmark `Visto.` pattern must be preserved — only the logo image/SVG and colors change, not the text
-- Before overwriting brand-config.json, copy the current file to references/brand-config.previous.json as backup

@@ -1,54 +1,56 @@
 {
-  "_instructions": "This file is populated by /brand-sync when the user provides a branding kit. Do not manually edit.",
-  "version": "2.0",
-  "updated": "2026-03-25",
+  "_instructions": "Single source of truth for La Casita de Luca brand tokens. Update this file when branding changes, then run /brand-sync to propagate.",
+  "version": "1.0",
+  "updated": "2026-04-05",
   "previous": {},
   "current": {
     "colors": {
-      "green": "#1AB87A",
-      "greenDark": "#09756A",
-      "greenLight": "#E8F8F2",
-      "greenMid": "#C6EFE0",
-      "dark": "#0F1727",
-      "darkMid": "#1C2B3A",
-      "text": "#2D3748",
-      "textMuted": "#6B7280",
-      "textLight": "#9CA3AF",
-      "border": "#E5E7EB",
-      "borderLight": "#F3F4F6",
-      "bg": "#F7F8FA",
-      "red": "#EF4444"
+      "teal": "#7DD3D8",
+      "tealDark": "#5BB8BD",
+      "tealLight": "#E8F7F8",
+      "tealMuted": "#B5E5E8",
+      "coral": "#E85D5D",
+      "coralDark": "#D14545",
+      "coralLight": "#FDE8E8",
+      "coralMuted": "#F2A5A5",
+      "charcoal": "#2D2D2D",
+      "pinkTongue": "#E8838B",
+      "warmCream": "#FFFAF6",
+      "softPeach": "#FFF0E6",
+      "white": "#FFFFFF",
+      "darkText": "#2D2D2D",
+      "bodyText": "#4A4A4A",
+      "mutedText": "#8A8A8A",
+      "border": "#E8E2DC",
+      "borderLight": "#F3EDE7",
+      "bgGray": "#F8F5F2",
+      "successGreen": "#52B788",
+      "errorRed": "#E63946",
+      "warningAmber": "#F4A261"
     },
     "fonts": {
       "heading": {
-        "family": "Montserrat",
-        "fallback": "sans-serif",
-        "googleImport": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:ital,wght@0,400;0,500;1,400&display=swap"
+        "family": "Nunito",
+        "fallback": "system-ui, sans-serif",
+        "googleImport": "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap"
       },
       "body": {
-        "family": "Roboto",
-        "fallback": "sans-serif"
+        "family": "Quicksand",
+        "fallback": "system-ui, sans-serif"
       }
     },
     "logo": {
-      "type": "designer-svg",
-      "note": "Real designer logo extracted from original file. Logo green is #0A9747, NOT brand green #1AB87A. Inline SVGs use viewBox=1700 2020 3300 980. The o is a compound path (outer + inner in same path element) - do NOT separate them.",
-      "logoGreen": "#0A9747",
-      "darkText": "#0F1727",
-      "whiteText": "#FFFFFF",
-      "viewBox": "1700 2020 3300 980",
-      "svgFile": {
-        "dark": "assets/visto-logo-dark.svg",
-        "white": "assets/visto-logo-white.svg"
-      },
-      "usage": {
-        "navDark": "Inline SVG from visto-logo-dark.svg (dark text on light bg)",
-        "footerWhite": "Inline SVG from visto-logo-white.svg (white text on dark bg)"
-      },
-      "instances": "55 logo instances across 32 files (nav dark + footer white variants)"
+      "type": "circular-image",
+      "note": "Circular logo — teal house outline with white fluffy dog inside, 'La casita de' in teal, 'Luca' in coral. Favicon is a paw print SVG at public/favicon.svg.",
+      "instagramSource": "https://www.instagram.com/lacasitadeluca/",
+      "faviconFile": "public/favicon.svg",
+      "primaryColor": "#7DD3D8",
+      "accentColor": "#E85D5D",
+      "brandName": "La Casita de Luca"
     },
     "rgba": {
-      "green": "26,184,122"
+      "teal": "125,211,216",
+      "coral": "232,93,93"
     }
   }
 }
