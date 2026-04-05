@@ -40,7 +40,6 @@ export function setPageContent(updates) {
 }
 
 // ─── Luca Photo ───────────────────────────────────────────────────────────────
-// --- Luca Photo ---
 
 export function getLucaPhoto() {
   return load(KEYS.lucaPhoto, '')
@@ -51,7 +50,6 @@ export function setLucaPhoto(url) {
 }
 
 // ─── Huespedcitos ─────────────────────────────────────────────────────────────
-// --- Huespedcitos ---
 
 export function getHuespedcitos() {
   return load(KEYS.huespedcitos, [])
@@ -69,7 +67,6 @@ export function removeHuespedcito(id) {
 }
 
 // ─── Gallery Photos ───────────────────────────────────────────────────────────
-// --- Gallery Photos ---
 
 export function getGalleryPhotos() {
   return load(KEYS.galleryPhotos, [])
