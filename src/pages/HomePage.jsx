@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Heart, Shield, Star, Camera, Calendar, ClipboardList, Sparkles, PawPrint } from 'lucide-react'
 import { InstagramEmbed } from 'react-social-media-embed'
-
-// Paste real post URLs here — just the instagram.com/p/XXXXX/ links
-const INSTAGRAM_POSTS = []
+import instagramPosts from '../data/instagramPosts.json'
 
 const features = [
   {
@@ -224,9 +222,9 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {INSTAGRAM_POSTS.length > 0 ? (
+          {instagramPosts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-              {INSTAGRAM_POSTS.map((url) => (
+              {instagramPosts.map(({ url }) => (
                 <InstagramEmbed key={url} url={url} width="100%" />
               ))}
             </div>
