@@ -20,6 +20,18 @@ export default function AdminPage() {
   return <AdminPanel onLogout={() => { sessionStorage.removeItem(SESSION_KEY); setAuthed(false) }} />
 }
 
+function AdminSection({ icon: Icon, iconColor = 'text-teal', title, children }) {
+  return (
+    <div className="bg-white rounded-2xl border border-border p-6 md:p-8">
+      <h2 className="text-xl font-bold text-charcoal mb-6 flex items-center gap-2">
+        {Icon && <Icon className={`w-5 h-5 ${iconColor}`} />}
+        {title}
+      </h2>
+      {children}
+    </div>
+  )
+}
+
 function AdminPanel({ onLogout }) {
   const today = startOfToday()
 
@@ -459,7 +471,7 @@ function AdminPanel({ onLogout }) {
             </>
           )}
         </div>
-      </AdminSection>
+      </div>
 
       <AdminSection icon={Calendar} iconColor="text-teal" title="Reservas del Día">
         <div className="mb-4">
@@ -514,7 +526,7 @@ function AdminPanel({ onLogout }) {
             ))}
           </div>
         )}
-      </div>
+      </AdminSection>
 
     </div>
   )
