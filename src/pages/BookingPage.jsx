@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { format, addDays, startOfWeek, addWeeks, isSameDay, isBefore, startOfToday } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { ChevronLeft, ChevronRight, Dog, Check, AlertCircle, Calendar } from 'lucide-react'
-import { getAvailability, addBooking, getCapacity } from '../data/bookingStore'
+import { getAvailability, addBooking, getCapacity, isDayClosed } from '../data/bookingStore'
 
 const SIZE_LABELS = {
   small: { label: 'Pequeño', desc: '< 10 kg', emoji: '🐶' },
@@ -101,13 +101,15 @@ export default function BookingPage() {
             const avail = getAvailability(dayStr)
             const isSelected = isSameDay(day, selectedDate)
             const isPast = isBefore(day, today)
+            const isClosed = !isPast && isDayClosed(dayStr)
+            const isDisabled = isPast || isClosed
             return (
               <button
                 key={dayStr}
-                disabled={isPast}
+                disabled={isDisabled}
                 onClick={() => { setSelectedDate(day); setResult(null) }}
                 className={`flex flex-col items-center py-3 px-1 rounded-xl transition-all text-center ${
-                  isPast
+                  isDisabled
                     ? 'opacity-40 cursor-not-allowed'
                     : isSelected
                     ? 'bg-teal text-white shadow-lg shadow-teal/25'
@@ -120,9 +122,10 @@ export default function BookingPage() {
                 <span className={`text-lg font-bold ${isSelected ? 'text-white' : 'text-charcoal'}`}>
                   {format(day, 'd')}
                 </span>
-                {!isPast && (
+                {!isDisabled && (
                   <div className={`mt-1 w-2 h-2 rounded-full ${avail.total > 0 ? 'bg-successGreen' : 'bg-errorRed'}`} />
                 )}
+                {isClosed && <span className="text-[9px] text-coral font-bold mt-0.5">cerrado</span>}
               </button>
             )
           })}

@@ -10,6 +10,17 @@ import {
 } from '../data/contentStore'
 
 export default function AdminPage() {
+  const isAuthed = sessionStorage.getItem(SESSION_KEY) === '1'
+  const [authed, setAuthed] = useState(isAuthed)
+
+  if (!authed) {
+    return <PasscodeGate onUnlock={() => setAuthed(true)} />
+  }
+
+  return <AdminPanel onLogout={() => { sessionStorage.removeItem(SESSION_KEY); setAuthed(false) }} />
+}
+
+function AdminPanel({ onLogout }) {
   const today = startOfToday()
 
   // --- Reservas state ---
@@ -39,6 +50,7 @@ export default function AdminPage() {
 
   const bookings = getBookingsForDate(selectedDate)
   const availability = getAvailability(selectedDate)
+  const dayConfig = getDayConfig(selectedDate)
 
   function handleRemoveBooking(bookingId, dogName) {
     if (!window.confirm(`¿Cancelar la reserva de ${dogName}? Esta acción no se puede deshacer.`)) return
@@ -328,38 +340,150 @@ export default function AdminPage() {
           Reservas del Día
         </h2>
 
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-          {Array.from({ length: 7 }, (_, i) => {
-            const day = addDays(today, i)
+        <div className="flex gap-2 overflow-x-auto pb-3 mb-6 -mx-1 px-1">
+          {days30.map((day) => {
             const dayStr = format(day, 'yyyy-MM-dd')
+            const cfg = getDayConfig(dayStr)
             const isSelected = dayStr === selectedDate
+            const hasCap = cfg.capacity != null
             return (
               <button
                 key={dayStr}
-                onClick={() => setSelectedDate(dayStr)}
-                className={`flex-shrink-0 flex flex-col items-center py-2 px-4 rounded-xl transition-all ${
-                  isSelected ? 'bg-teal text-white' : 'bg-bgGray hover:bg-tealLight text-charcoal'
+                onClick={() => { setSelectedDate(dayStr); setDayCapOverride(null) }}
+                className={`flex-shrink-0 flex flex-col items-center py-2 px-3 rounded-xl transition-all ${
+                  isSelected
+                    ? 'bg-teal text-white shadow-lg shadow-teal/25'
+                    : cfg.closed
+                    ? 'bg-coralLight text-coral border border-coral/20'
+                    : 'bg-bgGray hover:bg-tealLight text-charcoal'
                 }`}
               >
-                <span className={`text-xs font-semibold capitalize ${isSelected ? 'text-white/70' : 'text-mutedText'}`}>
+                <span className={`text-[10px] font-semibold uppercase mb-0.5 ${isSelected ? 'text-white/70' : 'text-mutedText'}`}>
                   {format(day, 'EEE', { locale: es })}
                 </span>
-                <span className="text-lg font-bold">{format(day, 'd')}</span>
+                <span className="text-sm font-bold">{format(day, 'd')}</span>
+                {cfg.closed && !isSelected && <Ban className="w-3 h-3 mt-0.5 text-coral" />}
+                {hasCap && !cfg.closed && !isSelected && <span className="text-[9px] text-tealDark font-semibold mt-0.5">adj</span>}
               </button>
             )
           })}
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          {Object.entries(sizeLabel).map(([key, label]) => (
-            <div key={key} className="bg-warmCream rounded-xl p-3 text-center">
-              <span className="text-sm font-semibold text-charcoal">{label}</span>
-              <div className="text-2xl font-extrabold text-tealDark mt-1">
-                {availability[key]}<span className="text-sm text-mutedText font-normal">/{cap[key]}</span>
-              </div>
-              <span className="text-xs text-mutedText">disponibles</span>
+        <div className="bg-warmCream rounded-xl p-5">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="font-bold text-charcoal capitalize">
+                {format(new Date(selectedDate + 'T12:00:00'), "EEEE d 'de' MMMM", { locale: es })}
+              </p>
+              {dayConfig.closed && (
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-coral bg-coralLight px-2 py-0.5 rounded-full mt-1">
+                  <Ban className="w-3 h-3" /> Día cerrado
+                </span>
+              )}
+              {dayConfig.capacity && !dayConfig.closed && (
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-tealDark bg-tealLight px-2 py-0.5 rounded-full mt-1">
+                  Capacidad personalizada
+                </span>
+              )}
             </div>
-          ))}
+            <button
+              onClick={handleToggleClosed}
+              className={`flex items-center gap-1.5 text-sm font-semibold py-2 px-4 rounded-xl transition-all ${
+                dayConfig.closed
+                  ? 'bg-successGreen text-white'
+                  : 'bg-coralLight text-coral hover:bg-coral/20'
+              }`}
+            >
+              {dayConfig.closed ? <><Check className="w-4 h-4" /> Reabrir</> : <><Ban className="w-4 h-4" /> Cerrar día</>}
+            </button>
+          </div>
+
+          {!dayConfig.closed && (
+            <>
+              {dayCapOverride ? (
+                <div>
+                  <p className="text-sm font-semibold text-charcoal mb-3">Capacidad para este día:</p>
+                  <div className="grid grid-cols-3 gap-3 mb-3">
+                    {Object.entries(sizeLabel).map(([key, label]) => (
+                      <div key={key} className="text-center">
+                        <label className="block text-xs font-semibold text-mutedText mb-1">{sizeEmoji[key]} {label}</label>
+                        <input
+                          type="number"
+                          min={0}
+                          max={20}
+                          value={dayCapOverride[key]}
+                          onChange={(e) => setDayCapOverride({ ...dayCapOverride, [key]: parseInt(e.target.value) || 0 })}
+                          className="w-full px-3 py-2 rounded-xl border border-border bg-white focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal/20 text-center text-lg font-bold"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleSaveDayCap}
+                      className="flex items-center gap-1.5 py-2 px-4 rounded-xl font-bold text-sm bg-teal text-white hover:bg-tealDark transition-all"
+                    >
+                      <Save className="w-4 h-4" /> Guardar
+                    </button>
+                    <button
+                      onClick={() => setDayCapOverride(null)}
+                      className="flex items-center gap-1.5 py-2 px-4 rounded-xl font-bold text-sm bg-bgGray text-charcoal hover:bg-border transition-all"
+                    >
+                      <X className="w-4 h-4" /> Cancelar
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 flex-wrap">
+                  <button
+                    onClick={handleEditDayCapacity}
+                    className="flex items-center gap-1.5 py-2 px-4 rounded-xl font-semibold text-sm bg-white border border-border text-charcoal hover:border-teal hover:text-tealDark transition-all"
+                  >
+                    <Settings className="w-4 h-4" /> Ajustar capacidad
+                  </button>
+                  {dayConfig.capacity && (
+                    <button
+                      onClick={handleResetDayCap}
+                      className="flex items-center gap-1.5 py-2 px-4 rounded-xl font-semibold text-sm text-mutedText hover:text-errorRed transition-colors"
+                    >
+                      <RotateCcw className="w-4 h-4" /> Restablecer
+                    </button>
+                  )}
+                  {savedDay && (
+                    <span className="flex items-center gap-1 text-sm text-successGreen font-semibold">
+                      <Check className="w-4 h-4" /> Guardado!
+                    </span>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </AdminSection>
+
+      <AdminSection icon={Calendar} iconColor="text-teal" title="Reservas del Día">
+        <div className="mb-4">
+          <p className="text-sm font-semibold text-charcoal mb-1 capitalize">
+            {format(new Date(selectedDate + 'T12:00:00'), "EEEE d 'de' MMMM", { locale: es })}
+          </p>
+          {availability.closed ? (
+            <p className="text-sm text-coral font-semibold mt-1">Día cerrado — sin reservas posibles</p>
+          ) : (
+            <div className="grid grid-cols-3 gap-3 mt-3">
+              {Object.entries(sizeLabel).map(([key, label]) => (
+                <div key={key} className="bg-warmCream rounded-xl p-3 text-center">
+                  <span className="text-xs font-semibold text-charcoal">{label}</span>
+                  <div className="text-xl font-extrabold text-tealDark mt-1">
+                    {availability[key]}
+                    <span className="text-xs text-mutedText font-normal">
+                      /{(dayConfig.capacity || getCapacity())[key]}
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-mutedText">disponibles</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {bookings.length === 0 ? (
@@ -377,13 +501,12 @@ export default function AdminPage() {
                     <span className="font-bold text-charcoal">{b.dogName}</span>
                     <span className="text-sm text-mutedText ml-2">({sizeLabel[b.size]})</span>
                     <div className="text-sm text-mutedText">{b.ownerName} · {b.phone}</div>
+                    {b.notes && <div className="text-xs text-mutedText mt-0.5 italic">{b.notes}</div>}
                   </div>
                 </div>
                 <button
                   onClick={() => handleRemoveBooking(b.id, b.dogName)}
                   className="p-2 rounded-lg text-errorRed hover:bg-coralLight transition-colors"
-                  title="Cancelar reserva"
-                  aria-label={`Cancelar reserva de ${b.dogName}`}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

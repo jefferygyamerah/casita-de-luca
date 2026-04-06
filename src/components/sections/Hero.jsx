@@ -1,4 +1,7 @@
 import { Calendar } from 'lucide-react'
+import Button from '../ui/Button'
+import useScrollReveal from '../../hooks/useScrollReveal'
+import { getPageContent } from '../../data/contentStore'
 
 function InstagramIcon({ className }) {
   return (
@@ -7,12 +10,11 @@ function InstagramIcon({ className }) {
     </svg>
   )
 }
-import Button from '../ui/Button'
-import useScrollReveal from '../../hooks/useScrollReveal'
 
 export default function Hero() {
   const textRef = useScrollReveal(0)
   const videoRef = useScrollReveal(100)
+  const { heroHeadline, heroSubtext } = getPageContent()
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-tealLight via-white to-coralLight">
@@ -35,16 +37,14 @@ export default function Hero() {
                 lineHeight: 1.1,
               }}
             >
-              Un hogar lleno de amor,{' '}
-              <span className="text-coral">juego y cuidado</span>{' '}
-              para tu perrito.
+              {heroHeadline}
             </h1>
 
             <p
               className="text-bodyText mb-10 max-w-xl mx-auto lg:mx-0"
               style={{ fontSize: 'clamp(16px, 1.5vw, 18px)', lineHeight: 1.5 }}
             >
-              Cuidamos a tu perrito como si fuera nuestro Luca.
+              {heroSubtext}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">

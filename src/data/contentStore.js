@@ -2,6 +2,7 @@ const KEYS = {
   lucaPhoto: 'casita_luca_photo',
   huespedcitos: 'casita_huespedcitos',
   galleryPhotos: 'casita_gallery_photos',
+  pageContent: 'casita_page_content',
 }
 
 function load(key, fallback) {
@@ -21,6 +22,24 @@ function makeId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
 }
 
+// ─── Page content (editable text) ─────────────────────────────────────────────
+
+const DEFAULT_CONTENT = {
+  heroHeadline: 'Un hogar lleno de amor, juego y cuidado para tu perrito.',
+  heroSubtext: 'Cuidamos a tu perrito como si fuera nuestro Luca.',
+  whatsapp: '50766746941',
+  contactNote: 'Hablemos. Respondemos rápido.',
+}
+
+export function getPageContent() {
+  return { ...DEFAULT_CONTENT, ...load(KEYS.pageContent, {}) }
+}
+
+export function setPageContent(updates) {
+  save(KEYS.pageContent, { ...load(KEYS.pageContent, {}), ...updates })
+}
+
+// ─── Luca Photo ───────────────────────────────────────────────────────────────
 // --- Luca Photo ---
 
 export function getLucaPhoto() {
@@ -31,6 +50,7 @@ export function setLucaPhoto(url) {
   save(KEYS.lucaPhoto, url)
 }
 
+// ─── Huespedcitos ─────────────────────────────────────────────────────────────
 // --- Huespedcitos ---
 
 export function getHuespedcitos() {
@@ -48,6 +68,7 @@ export function removeHuespedcito(id) {
   save(KEYS.huespedcitos, list)
 }
 
+// ─── Gallery Photos ───────────────────────────────────────────────────────────
 // --- Gallery Photos ---
 
 export function getGalleryPhotos() {
