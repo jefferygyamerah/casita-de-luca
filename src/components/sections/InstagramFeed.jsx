@@ -11,12 +11,14 @@ import { InstagramEmbed } from 'react-social-media-embed'
 import Section from '../ui/Section'
 import instagramPosts from '../../data/instagramPosts.json'
 import useScrollReveal from '../../hooks/useScrollReveal'
+import { getGalleryPhotos } from '../../data/contentStore'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/la_casita_de_luca/'
 
 export default function InstagramFeed() {
   const headRef = useScrollReveal()
   const gridRef = useScrollReveal(80)
+  const galleryPhotos = getGalleryPhotos()
 
   return (
     <Section bg="bg-white">
@@ -44,7 +46,24 @@ export default function InstagramFeed() {
         </a>
       </div>
 
-      {instagramPosts.length > 0 ? (
+      {galleryPhotos.length > 0 ? (
+        <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {galleryPhotos.map((photo) => (
+            <div key={photo.id} className="group relative aspect-square rounded-2xl overflow-hidden border border-border shadow-sm">
+              <img
+                src={photo.url}
+                alt={photo.caption || 'Momento en La Casita'}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              {photo.caption && (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <p className="text-white text-xs font-medium">{photo.caption}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : instagramPosts.length > 0 ? (
         <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
           {instagramPosts.map(({ url }) => (
             <div key={url} className="w-full rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">

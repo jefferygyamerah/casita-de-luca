@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Heart, Shield, Star, Camera, Calendar, ClipboardList, Sparkles, PawPrint } from 'lucide-react'
 import { InstagramEmbed } from 'react-social-media-embed'
 import instagramPosts from '../data/instagramPosts.json'
+import { getLucaPhoto, getHuespedcitos, getGalleryPhotos } from '../data/contentStore'
 
 const features = [
   {
@@ -48,6 +49,10 @@ const testimonials = [
 ]
 
 export default function HomePage() {
+  const lucaPhoto = getLucaPhoto()
+  const huespedcitos = getHuespedcitos()
+  const galleryPhotos = getGalleryPhotos()
+
   return (
     <div>
       {/* Hero Section */}
@@ -203,8 +208,11 @@ export default function HomePage() {
                 </div>
                 <div className="text-teal text-2xl">&hearts;</div>
                 <div className="text-center">
-                  <div className="w-14 h-14 bg-warmCream rounded-full flex items-center justify-center mx-auto mb-2 border-2 border-tealMuted">
-                    <span className="text-2xl">🐾</span>
+                  <div className="w-14 h-14 rounded-full overflow-hidden mx-auto mb-2 border-2 border-tealMuted bg-warmCream flex items-center justify-center">
+                    {lucaPhoto
+                      ? <img src={lucaPhoto} alt="Luca Toni" className="w-full h-full object-cover" />
+                      : <span className="text-2xl">🐾</span>
+                    }
                   </div>
                   <span className="font-bold text-charcoal text-sm">Luca</span>
                 </div>
@@ -213,6 +221,38 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Huespedcitos */}
+      {huespedcitos.length > 0 && (
+        <section className="py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-14">
+              <span className="inline-flex items-center gap-1.5 text-tealDark font-semibold text-sm bg-tealLight px-3 py-1 rounded-full mb-4">
+                <PawPrint className="w-4 h-4" />
+                Nuestros Huespedcitos
+              </span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-charcoal">
+                Conócelos a todos
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+              {huespedcitos.map((dog) => (
+                <div key={dog.id} className="text-center group">
+                  <div className="w-full aspect-square rounded-2xl overflow-hidden border-2 border-border group-hover:border-tealMuted transition-colors shadow-sm mb-3">
+                    <img
+                      src={dog.photoUrl}
+                      alt={dog.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <p className="font-bold text-charcoal text-sm">{dog.name}</p>
+                  {dog.breed && <p className="text-xs text-mutedText">{dog.breed}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Instagram Gallery */}
       <section className="py-16 md:py-24">
@@ -227,7 +267,24 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {instagramPosts.length > 0 ? (
+          {galleryPhotos.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {galleryPhotos.map((photo) => (
+                <div key={photo.id} className="group relative aspect-square rounded-2xl overflow-hidden border border-border shadow-sm">
+                  <img
+                    src={photo.url}
+                    alt={photo.caption || 'Momento en La Casita'}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {photo.caption && (
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-white text-xs font-medium">{photo.caption}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : instagramPosts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {instagramPosts.map(({ url }) => (
                 <InstagramEmbed key={url} url={url} width="100%" />
