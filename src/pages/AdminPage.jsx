@@ -459,7 +459,7 @@ function AdminPanel({ onLogout }) {
             </>
           )}
         </div>
-      </AdminSection>
+      </div>
 
       <AdminSection icon={Calendar} iconColor="text-teal" title="Reservas del Día">
         <div className="mb-4">
@@ -514,7 +514,7 @@ function AdminPanel({ onLogout }) {
             ))}
           </div>
         )}
-      </div>
+      </AdminSection>
 
     </div>
   )
